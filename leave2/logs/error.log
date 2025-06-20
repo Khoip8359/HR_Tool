@@ -1,0 +1,78 @@
+[2025-06-15 14:29:29] ERROR in error: 錯誤日誌測試消息
+[2025-06-15 14:29:32] ERROR in error: 最終錯誤測試消息
+[2025-06-15 14:36:08] ERROR in error: 錯誤日誌測試消息
+[2025-06-15 14:36:09] ERROR in app: Unknown command: test_log
+[2025-06-15 14:36:31] ERROR in error: 錯誤日誌測試消息
+[2025-06-15 20:30:34] ERROR in error: 錯誤日誌測試消息
+[2025-06-15 20:30:34] ERROR in app: Extension initialization failed: 'ADAuth' object has no attribute 'init_app'
+Traceback (most recent call last):
+  File "/home/kevin/MyProject/project_root/leave2/app/__init__.py", line 34, in init_other_extensions
+    ad_auth.init_app(app)
+AttributeError: 'ADAuth' object has no attribute 'init_app'
+[2025-06-15 21:05:36] ERROR in error: 錯誤日誌測試消息
+[2025-06-15 21:05:36] ERROR in app: Extension initialization failed: 'DataPoolManager' object has no attribute 'init_app'
+Traceback (most recent call last):
+  File "/home/kevin/MyProject/project_root/leave2/app/__init__.py", line 38, in init_other_extensions
+    data_pool_manager.init_app(app)
+AttributeError: 'DataPoolManager' object has no attribute 'init_app'
+[2025-06-15 21:14:38] ERROR in error: 錯誤日誌測試消息
+[2025-06-15 21:27:05] ERROR in error: 錯誤日誌測試消息
+[2025-06-15 21:27:59] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 07:34:06] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 07:35:02] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 07:39:23] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 07:41:02] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 07:42:36] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 09:13:41] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 10:03:32] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 10:30:49] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 10:33:06] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 13:37:39] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 13:37:40] ERROR in app.extensions.jwt_manager: JWT 資料庫表格初始化失敗: 創建 JWT 表格失敗: 連接池 'mysql_wms' 不存在，可用的連接池: ['mysql_hr', 'mssql_hr']
+[2025-06-16 13:38:41] ERROR in app.extensions.jwt_manager: 記錄 JWT 會話到資料庫失敗: 連接池 'mysql_wms' 不存在，可用的連接池: ['mysql_hr', 'mssql_hr']
+[2025-06-16 13:43:28] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 14:06:21] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 14:08:16] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 14:08:28] ERROR in app: Unhandled exception: 405 Method Not Allowed: The method is not allowed for the requested URL.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1458, in dispatch_request
+    self.raise_routing_exception(req)
+  File "/usr/local/lib/python3.10/dist-packages/flask/app.py", line 1440, in raise_routing_exception
+    raise request.routing_exception  # type: ignore
+  File "/usr/local/lib/python3.10/dist-packages/flask/ctx.py", line 353, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+  File "/usr/local/lib/python3.10/dist-packages/werkzeug/routing/map.py", line 647, in match
+    raise MethodNotAllowed(valid_methods=list(e.have_match_for)) from None
+werkzeug.exceptions.MethodNotAllowed: 405 Method Not Allowed: The method is not allowed for the requested URL.
+[2025-06-16 14:08:28] ERROR in security: Security alert - Unhandled exception from 127.0.0.1: 405 Method Not Allowed: The method is not allowed for the requested URL.
+[2025-06-16 14:40:23] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 15:41:01] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 20:24:27] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 20:29:07] ERROR in app: 郵件測試失敗: 缺少必要的SMTP配置參數
+[2025-06-16 20:38:12] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 20:38:30] ERROR in app: 郵件測試失敗: EmailManager.__init__() got an unexpected keyword argument 'config'
+[2025-06-16 20:47:03] ERROR in app: 郵件測試失敗: EmailManager.__init__() got an unexpected keyword argument 'config'
+[2025-06-16 20:47:12] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 20:47:17] ERROR in app: 郵件測試失敗: module 'datetime' has no attribute 'now'
+[2025-06-16 20:51:19] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 20:51:25] ERROR in app: 郵件測試失敗: type object 'datetime.datetime' has no attribute 'datetime'
+[2025-06-16 20:55:00] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 20:55:05] ERROR in app.utils.smtp_utils: 郵件發送失敗: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1007)
+[2025-06-16 20:55:05] ERROR in app: 郵件測試失敗: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1007)
+[2025-06-16 20:58:08] ERROR in error: 錯誤日誌測試消息
+[2025-06-16 20:58:12] ERROR in app.utils.smtp_utils: 郵件發送失敗: {'u5961@fulinvn.com': (454, b'4.7.1 <u5961@fulinvn.com>: Relay access denied')}
+[2025-06-16 20:58:12] ERROR in app: 郵件測試失敗: {'u5961@fulinvn.com': (454, b'4.7.1 <u5961@fulinvn.com>: Relay access denied')}
+[2025-06-17 08:12:03] ERROR in error: 錯誤日誌測試消息
+[2025-06-17 08:15:23] ERROR in error: 錯誤日誌測試消息
+[2025-06-17 11:41:39] ERROR in error: 錯誤日誌測試消息
+[2025-06-17 14:00:45] ERROR in error: 錯誤日誌測試消息
+[2025-06-17 14:00:45] ERROR in app.core.database.base.db_connection: 創建資料庫引擎失敗: No module named 'pymysql'
+[2025-06-17 14:00:45] ERROR in app.extensions.data_manager: 資料庫連接池初始化失敗: No module named 'pymysql'
+[2025-06-17 14:00:45] ERROR in app.extensions.flask_database: 連接池 'mysql_hr' 初始化失敗: No module named 'pymysql'
+[2025-06-17 14:00:45] ERROR in app.core.database.base.db_connection: 創建資料庫引擎失敗: No module named 'pymssql'
+[2025-06-17 14:00:45] ERROR in app.extensions.data_manager: 資料庫連接池初始化失敗: No module named 'pymssql'
+[2025-06-17 14:00:45] ERROR in app.extensions.flask_database: 連接池 'mssql_hr' 初始化失敗: No module named 'pymssql'
+[2025-06-17 14:00:45] ERROR in app.extensions.jwt_manager: JWT 資料庫表格初始化失敗: 創建 JWT 表格失敗: 連接池 'mysql_hr' 不存在，可用的連接池: []
+[2025-06-17 14:01:32] ERROR in app.extensions.jwt_manager: 記錄 JWT 會話到資料庫失敗: 連接池 'mysql_hr' 不存在，可用的連接池: []

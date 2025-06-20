@@ -1,0 +1,157 @@
+[2025-06-15 10:39:49] INFO in logger: 日誌系統初始化完成
+[2025-06-15 10:40:06] INFO in logger: 日誌系統初始化完成
+[2025-06-15 10:48:39] INFO in data_manager: 所有連接池資源已釋放
+[2025-06-15 10:48:41] INFO in logger: 日誌系統初始化完成
+[2025-06-15 10:48:41] ERROR in data_manager: 資料庫連接池初始化失敗: 找不到 section: mysql_hr, 可用的 sections: ['mssql', 'mysql', 'hr']
+[2025-06-15 10:48:41] ERROR in data_manager: 資料庫連接池初始化失敗: 找不到 section: mssql_hr, 可用的 sections: ['mssql', 'mysql', 'hr']
+[2025-06-15 10:50:22] INFO in data_manager: 所有連接池資源已釋放
+[2025-06-15 10:50:24] INFO in logger: 日誌系統初始化完成
+[2025-06-15 10:50:24] INFO in db_connection: 成功載入配置 section: mysql
+[2025-06-15 10:50:24] INFO in db_connection: 成功創建 mysql 資料庫引擎: 127.0.0.1:3306/leave_system
+[2025-06-15 10:50:24] INFO in data_manager: 資料庫連接池成功初始化: mysql://127.0.0.1:3306/leave_system
+[2025-06-15 10:50:24] INFO in data_manager: 成功添加連接池: mysql_hr
+[2025-06-15 10:50:24] INFO in db_connection: 成功載入配置 section: mssql
+[2025-06-15 10:50:24] INFO in db_connection: 成功創建 mssql 資料庫引擎: 192.168.1.217:1433/PHULAM
+[2025-06-15 10:50:24] INFO in data_manager: 資料庫連接池成功初始化: mssql://192.168.1.217:1433/PHULAM
+[2025-06-15 10:50:24] INFO in data_manager: 成功添加連接池: mssql_hr
+[2025-06-15 10:51:26] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 10:51:26] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 10:51:26] INFO in data_manager: 已釋放連接池: mysql_hr
+[2025-06-15 10:51:26] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 10:51:26] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 10:51:26] INFO in data_manager: 已釋放連接池: mssql_hr
+[2025-06-15 10:51:26] INFO in data_manager: 所有連接池資源已釋放
+[2025-06-15 10:51:31] INFO in logger: 日誌系統初始化完成
+[2025-06-15 10:51:31] INFO in db_connection: 成功載入配置 section: mysql
+[2025-06-15 10:51:31] INFO in db_connection: 成功創建 mysql 資料庫引擎: 127.0.0.1:3306/leave_system
+[2025-06-15 10:51:31] INFO in data_manager: 資料庫連接池成功初始化: mysql://127.0.0.1:3306/leave_system
+[2025-06-15 10:51:31] INFO in data_manager: 成功添加連接池: mysql_hr
+[2025-06-15 10:51:31] INFO in db_connection: 成功載入配置 section: mssql
+[2025-06-15 10:51:31] INFO in db_connection: 成功創建 mssql 資料庫引擎: 192.168.1.217:1433/PHULAM
+[2025-06-15 10:51:31] INFO in data_manager: 資料庫連接池成功初始化: mssql://192.168.1.217:1433/PHULAM
+[2025-06-15 10:51:31] INFO in data_manager: 成功添加連接池: mssql_hr
+[2025-06-15 10:53:00] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 10:53:00] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 10:53:00] INFO in data_manager: 已釋放連接池: mysql_hr
+[2025-06-15 10:53:00] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 10:53:00] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 10:53:00] INFO in data_manager: 已釋放連接池: mssql_hr
+[2025-06-15 10:53:00] INFO in data_manager: 所有連接池資源已釋放
+[2025-06-15 10:53:01] INFO in logger: 日誌系統初始化完成
+[2025-06-15 10:53:01] INFO in db_connection: 成功載入配置 section: mysql
+[2025-06-15 10:53:01] INFO in db_connection: 成功創建 mysql 資料庫引擎: 127.0.0.1:3306/leave_system
+[2025-06-15 10:53:01] INFO in data_manager: 資料庫連接池成功初始化: mysql://127.0.0.1:3306/leave_system
+[2025-06-15 10:53:01] INFO in data_manager: 成功添加連接池: mysql_hr
+[2025-06-15 10:53:01] INFO in db_connection: 成功載入配置 section: mssql
+[2025-06-15 10:53:01] INFO in db_connection: 成功創建 mssql 資料庫引擎: 192.168.1.217:1433/PHULAM
+[2025-06-15 10:53:01] INFO in data_manager: 資料庫連接池成功初始化: mssql://192.168.1.217:1433/PHULAM
+[2025-06-15 10:53:01] INFO in data_manager: 成功添加連接池: mssql_hr
+[2025-06-15 10:54:22] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 10:54:22] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 10:54:22] INFO in data_manager: 已釋放連接池: mysql_hr
+[2025-06-15 10:54:22] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 10:54:22] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 10:54:22] INFO in data_manager: 已釋放連接池: mssql_hr
+[2025-06-15 10:54:22] INFO in data_manager: 所有連接池資源已釋放
+[2025-06-15 10:54:27] INFO in logger: 日誌系統初始化完成
+[2025-06-15 10:54:27] INFO in db_connection: 成功載入配置 section: mysql
+[2025-06-15 10:54:27] INFO in db_connection: 成功創建 mysql 資料庫引擎: 127.0.0.1:3306/leave_system
+[2025-06-15 10:54:27] INFO in data_manager: 資料庫連接池成功初始化: mysql://127.0.0.1:3306/leave_system
+[2025-06-15 10:54:27] INFO in data_manager: 成功添加連接池: mysql_hr
+[2025-06-15 10:54:27] INFO in db_connection: 成功載入配置 section: mssql
+[2025-06-15 10:54:27] INFO in db_connection: 成功創建 mssql 資料庫引擎: 192.168.1.217:1433/PHULAM
+[2025-06-15 10:54:27] INFO in data_manager: 資料庫連接池成功初始化: mssql://192.168.1.217:1433/PHULAM
+[2025-06-15 10:54:27] INFO in data_manager: 成功添加連接池: mssql_hr
+[2025-06-15 10:55:47] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 10:55:47] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 10:55:47] INFO in data_manager: 已釋放連接池: mysql_hr
+[2025-06-15 10:55:47] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 10:55:47] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 10:55:47] INFO in data_manager: 已釋放連接池: mssql_hr
+[2025-06-15 10:55:47] INFO in data_manager: 所有連接池資源已釋放
+[2025-06-15 10:55:49] INFO in logger: 日誌系統初始化完成
+[2025-06-15 10:55:49] INFO in db_connection: 成功載入配置 section: mysql
+[2025-06-15 10:55:49] INFO in db_connection: 成功創建 mysql 資料庫引擎: 127.0.0.1:3306/leave_system
+[2025-06-15 10:55:49] INFO in data_manager: 資料庫連接池成功初始化: mysql://127.0.0.1:3306/leave_system
+[2025-06-15 10:55:49] INFO in data_manager: 成功添加連接池: mysql_hr
+[2025-06-15 10:55:49] INFO in db_connection: 成功載入配置 section: hr
+[2025-06-15 10:55:49] INFO in db_connection: 成功創建 mssql 資料庫引擎: 192.168.1.214:1433/NHUAPHULAM
+[2025-06-15 10:55:49] INFO in data_manager: 資料庫連接池成功初始化: mssql://192.168.1.214:1433/NHUAPHULAM
+[2025-06-15 10:55:49] INFO in data_manager: 成功添加連接池: mssql_hr
+[2025-06-15 11:00:25] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 11:00:25] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 11:00:25] INFO in data_manager: 已釋放連接池: mysql_hr
+[2025-06-15 11:00:25] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 11:00:25] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 11:00:25] INFO in data_manager: 已釋放連接池: mssql_hr
+[2025-06-15 11:00:25] INFO in data_manager: 所有連接池資源已釋放
+[2025-06-15 11:00:28] INFO in logger: 日誌系統初始化完成
+[2025-06-15 11:00:28] INFO in db_connection: 成功載入配置 section: mysql
+[2025-06-15 11:00:28] INFO in db_connection: 成功創建 mysql 資料庫引擎: 127.0.0.1:3306/leave_system
+[2025-06-15 11:00:28] INFO in data_manager: 資料庫連接池成功初始化: mysql://127.0.0.1:3306/leave_system
+[2025-06-15 11:00:28] INFO in data_manager: 成功添加連接池: mysql_hr
+[2025-06-15 11:00:28] INFO in db_connection: 成功載入配置 section: hr
+[2025-06-15 11:00:28] INFO in db_connection: 成功創建 mssql 資料庫引擎: 192.168.1.214:1433/NHUAPHULAM
+[2025-06-15 11:00:28] INFO in data_manager: 資料庫連接池成功初始化: mssql://192.168.1.214:1433/NHUAPHULAM
+[2025-06-15 11:00:28] INFO in data_manager: 成功添加連接池: mssql_hr
+[2025-06-15 11:18:52] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 11:18:52] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 11:18:52] INFO in data_manager: 已釋放連接池: mysql_hr
+[2025-06-15 11:18:52] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 11:18:52] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 11:18:52] INFO in data_manager: 已釋放連接池: mssql_hr
+[2025-06-15 11:18:52] INFO in data_manager: 所有連接池資源已釋放
+[2025-06-15 11:18:53] INFO in logger: 日誌系統初始化完成
+[2025-06-15 11:18:53] INFO in db_connection: 成功載入配置 section: mysql
+[2025-06-15 11:18:53] INFO in db_connection: 成功創建 mysql 資料庫引擎: 127.0.0.1:3306/leave_system
+[2025-06-15 11:18:53] INFO in data_manager: 資料庫連接池成功初始化: mysql://127.0.0.1:3306/leave_system
+[2025-06-15 11:18:53] INFO in data_manager: 成功添加連接池: mysql_hr
+[2025-06-15 11:18:53] INFO in db_connection: 成功載入配置 section: hr
+[2025-06-15 11:18:53] INFO in db_connection: 成功創建 mssql 資料庫引擎: 192.168.1.214:1433/NHUAPHULAM
+[2025-06-15 11:18:53] INFO in data_manager: 資料庫連接池成功初始化: mssql://192.168.1.214:1433/NHUAPHULAM
+[2025-06-15 11:18:53] INFO in data_manager: 成功添加連接池: mssql_hr
+[2025-06-15 11:20:59] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 11:20:59] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 11:20:59] INFO in data_manager: 已釋放連接池: mysql_hr
+[2025-06-15 11:20:59] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 11:20:59] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 11:20:59] INFO in data_manager: 已釋放連接池: mssql_hr
+[2025-06-15 11:20:59] INFO in data_manager: 所有連接池資源已釋放
+[2025-06-15 11:21:05] INFO in logger: 日誌系統初始化完成
+[2025-06-15 11:21:05] INFO in data_manager: 資料庫連接池成功初始化: mysql://127.0.0.1:3306/leave_system
+[2025-06-15 11:21:05] INFO in data_manager: 成功添加連接池: mysql_hr
+[2025-06-15 11:21:05] INFO in data_manager: 資料庫連接池成功初始化: mssql://192.168.1.214:1433/NHUAPHULAM
+[2025-06-15 11:21:05] INFO in data_manager: 成功添加連接池: mssql_hr
+[2025-06-15 11:22:17] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 11:22:17] INFO in data_manager: 已釋放連接池: mysql_hr
+[2025-06-15 11:22:17] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 11:22:17] INFO in data_manager: 已釋放連接池: mssql_hr
+[2025-06-15 11:22:17] INFO in data_manager: 所有連接池資源已釋放
+[2025-06-15 11:22:19] INFO in logger: 日誌系統初始化完成
+[2025-06-15 11:27:21] INFO in logger: 日誌系統初始化完成
+[2025-06-15 11:27:21] INFO in flask_database: 載入了 2 個資料庫配置
+[2025-06-15 11:27:21] INFO in db_connection: 成功載入配置 section: mysql
+[2025-06-15 11:27:21] INFO in db_connection: 成功創建 mysql 資料庫引擎: 127.0.0.1:3306/leave_system
+[2025-06-15 11:27:21] INFO in data_manager: 資料庫連接池成功初始化: mysql://127.0.0.1:3306/leave_system
+[2025-06-15 11:27:21] INFO in data_manager: 成功添加連接池: mysql_hr
+[2025-06-15 11:27:21] INFO in flask_database: 連接池 'mysql_hr' 初始化成功
+[2025-06-15 11:27:21] INFO in db_connection: 成功載入配置 section: hr
+[2025-06-15 11:27:21] INFO in db_connection: 成功創建 mssql 資料庫引擎: 192.168.1.214:1433/NHUAPHULAM
+[2025-06-15 11:27:21] INFO in data_manager: 資料庫連接池成功初始化: mssql://192.168.1.214:1433/NHUAPHULAM
+[2025-06-15 11:27:21] INFO in data_manager: 成功添加連接池: mssql_hr
+[2025-06-15 11:27:21] INFO in flask_database: 連接池 'mssql_hr' 初始化成功
+[2025-06-15 11:27:21] INFO in flask_database: Flask 資料庫管理器初始化完成
+[2025-06-15 11:27:21] INFO in run: Starting Flask server with config: production
+[2025-06-15 11:27:21] INFO in run: Server running on 127.0.0.1:5000 (debug=False)
+[2025-06-15 11:28:06] INFO in flask_database: 正在清理資料庫連接池資源...
+[2025-06-15 11:28:06] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 11:28:06] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 11:28:06] INFO in data_manager: 已釋放連接池: mysql_hr
+[2025-06-15 11:28:06] INFO in db_connection: 資料庫引擎已釋放
+[2025-06-15 11:28:06] INFO in data_manager: 資料庫連接池資源已釋放
+[2025-06-15 11:28:06] INFO in data_manager: 已釋放連接池: mssql_hr
+[2025-06-15 11:28:06] INFO in data_manager: 所有連接池資源已釋放
+[2025-06-15 11:28:08] INFO in logger: 日誌系統初始化完成
+[2025-06-15 11:30:48] INFO in logger: 日誌系統初始化完成
+[2025-06-15 11:40:45] INFO in logger: 日誌系統初始化完成
+[2025-06-15 11:42:31] INFO in logger: 日誌系統初始化完成

@@ -1,0 +1,141 @@
+# app/extensions/logging_extension.py
+"""
+Flask 日誌擴展 - 極簡版
+基於 config.py 的日誌配置，使用隊列避免文件鎖定問題
+"""
+
+import logging
+import logging.handlers
+import os
+import atexit
+import queue
+from typing import Dict
+
+class SimpleLoggingExtension:
+    """簡化的 Flask 日誌擴展"""
+    
+    def __init__(self):
+        self.listeners = []
+        self._initialized = False
+    
+    def init_app(self, app):
+        """初始化日誌系統"""
+        if self._initialized:
+            return
+        
+        try:
+            # 確保日誌目錄存在
+            log_dir = getattr(app.config, 'LOG_DIR', 'logs')
+            os.makedirs(log_dir, exist_ok=True)
+            
+            # 獲取配置
+            log_files = getattr(app.config, 'LOG_FILES', {})
+            console_enabled = getattr(app.config, 'CONSOLE_LOG_ENABLED', True)
+            
+            # 設置隊列日誌系統
+            self._setup_queue_logging(log_files, console_enabled)
+            
+            # 註冊清理函數
+            atexit.register(self._cleanup)
+            
+            self._initialized = True
+            app.extensions['logging_extension'] = self
+            
+            # 測試日誌
+            logger = logging.getLogger('app')
+            logger.info("隊列日誌系統初始化完成")
+            
+        except Exception as e:
+            print(f"日誌系統初始化失敗: {str(e)}")
+            raise
+    
+    def _setup_queue_logging(self, log_files: Dict, console_enabled: bool):
+        """設置基於隊列的日誌系統"""
+        # 清理現有處理器
+        root_logger = logging.getLogger()
+        root_logger.handlers.clear()
+        root_logger.setLevel(logging.INFO)
+        
+        # 創建格式器
+        formatter = logging.Formatter(
+            '[%(asctime)s] %(levelname)s in %(name)s: %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
+        
+        # 為每個日誌文件創建隊列系統
+        for log_name, log_config in log_files.items():
+            self._create_file_queue_handler(log_config, formatter)
+        
+        # 創建控制台隊列處理器
+        if console_enabled:
+            self._create_console_queue_handler(formatter)
+    
+    def _create_file_queue_handler(self, log_config: Dict, formatter):
+        """為單個日誌文件創建隊列處理器"""
+        # 創建隊列
+        log_queue = queue.Queue()
+        
+        # 創建隊列處理器並添加到根日誌記錄器
+        queue_handler = logging.handlers.QueueHandler(log_queue)
+        queue_handler.setLevel(log_config.get('level', logging.INFO))
+        logging.getLogger().addHandler(queue_handler)
+        
+        # 創建實際的文件處理器
+        file_handler = logging.handlers.RotatingFileHandler(
+            log_config['filename'],
+            maxBytes=log_config.get('max_bytes', 10*1024*1024),
+            backupCount=log_config.get('backup_count', 5),
+            encoding='utf-8'
+        )
+        file_handler.setLevel(log_config.get('level', logging.INFO))
+        file_handler.setFormatter(formatter)
+        
+        # 創建並啟動隊列監聽器
+        listener = logging.handlers.QueueListener(log_queue, file_handler)
+        listener.start()
+        self.listeners.append(listener)
+    
+    def _create_console_queue_handler(self, formatter):
+        """創建控制台隊列處理器"""
+        # 創建隊列
+        console_queue = queue.Queue()
+        
+        # 創建隊列處理器並添加到根日誌記錄器
+        queue_handler = logging.handlers.QueueHandler(console_queue)
+        queue_handler.setLevel(logging.INFO)
+        logging.getLogger().addHandler(queue_handler)
+        
+        # 創建實際的控制台處理器
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)
+        console_handler.setFormatter(logging.Formatter(
+            '[%(asctime)s] %(levelname)s: %(message)s',
+            datefmt='%H:%M:%S'
+        ))
+        
+        # 創建並啟動隊列監聽器
+        listener = logging.handlers.QueueListener(console_queue, console_handler)
+        listener.start()
+        self.listeners.append(listener)
+    
+    def _cleanup(self):
+        """清理資源"""
+        for listener in self.listeners:
+            try:
+                listener.stop()
+            except:
+                pass
+        self.listeners.clear()
+        self._initialized = False
+
+# 創建全局實例
+logging_extension = SimpleLoggingExtension()
+
+# 簡化的接口函數
+def setup_logging(app):
+    """設置日誌系統"""
+    return logging_extension.init_app(app)
+
+def get_logger(name='app'):
+    """獲取日誌記錄器"""
+    return logging.getLogger(name)
