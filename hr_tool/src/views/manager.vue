@@ -2,20 +2,6 @@
     <div class="container-fluid py-4">
         <UserInfo></UserInfo>
 
-        <!-- Navigation Buttons -->
-        <div class="row g-3 mb-4">
-            <div class="col-auto">
-                <RouterLink to="/home/manager/list" class="btn btn-outline-primary">
-                    <i class="bi bi-list-ul me-2"></i> List View
-                </RouterLink>
-            </div>
-            <div class="col-auto">
-                <RouterLink to="/home/manager/calendar" class="btn btn-outline-success">
-                    <i class="bi bi-calendar-event me-2"></i> Calendar View
-                </RouterLink>
-            </div>
-        </div>
-
         <div class="row">
             <!-- Left side - Subordinates Table -->
             <div class="col-lg-3 col-md-5 mb-4">

@@ -84,7 +84,6 @@
 </template>
 
 <script setup>
-import { useAccountStore } from '@/stores/account'
 import { useUserStore } from '@/stores/user'
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -99,7 +98,6 @@ const isAutoLogging = ref(false)
 const autoRedirectEnabled = ref(true) // Bật tự động redirect
 const router = useRouter()
 const userStore = useUserStore()
-const accountStore = useAccountStore()
 
 // Development mode check
 const showDebugInfo = ref(import.meta.env.DEV)
@@ -255,10 +253,6 @@ const handleLoginSuccess = async (responseData) => {
 
     // Save to user store với remember me
     userStore.setUserData(responseData, rememberMe.value)
-    
-    if (accountStore.saveAccount) {
-      accountStore.saveAccount(username.value, '', true) // Pass empty password
-    }
 
     isSuccess.value = true
     responseMessage.value = `✅ Đăng nhập thành công!\n👋 Chào mừng: ${userStore.displayName}`
