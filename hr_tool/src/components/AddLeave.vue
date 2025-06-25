@@ -142,6 +142,16 @@
           readonly
           :class="{'text-danger': leaveDuration.toString().includes('không hợp lệ')}"
         />
+        <!-- Hiển thị thông báo lỗi khi vượt quá thời gian còn lại -->
+        <div v-if="!isLeaveTimeValid && leaveDuration && !leaveDuration.toString().includes('không hợp lệ')" class="text-danger mt-1">
+          <i class="bi bi-exclamation-triangle-fill me-1"></i>
+          <span v-if="selectedLeaveType === 'PPN'">
+            Thời gian nghỉ vượt quá số phép phụ nữ còn lại ({{ PPN_count }} phép = {{ (PPN_count * 0.5) }} giờ)
+          </span>
+          <span v-else>
+            Thời gian nghỉ vượt quá số ngày phép còn lại ({{ remain }} ngày = {{ remain * 8 }} giờ)
+          </span>
+        </div>
       </div>
 
       <div class="mb-3">
@@ -150,8 +160,8 @@
       </div>
 
       <div class="text-end">
-        <button class="btn btn-success px-4" :disabled="!isFormValid">
-          Gửi đơn
+        <button class="btn btn-success px-4" :disabled="!canSubmit" @click="submitLeave">
+          {{ !canSubmit ? 'Không thể gửi đơn' : 'Gửi đơn' }}
         </button>
       </div>
     </div>
@@ -226,6 +236,12 @@ const userStore = useUserStore()
 const {userInfo} = storeToRefs(userStore)
 const leaveType = ref([])
 
+const leaveLetter = ref([])
+const loading = ref(false)
+const error = ref('')
+const remain = ref('')
+const PPN_count = ref('')
+
 // Leave type search variables
 const selectedLeaveType = ref('')
 const selectedLeaveTypeName = ref('')
@@ -247,6 +263,116 @@ const tempHour = ref(7)
 const tempMinute = ref(30)
 const directTimeInput = ref('')
 const timeInputError = ref('')
+
+const submitLeave = () => {
+  console.log('submitLeave called')
+  
+  // Double-check validation before submitting
+  if (!canSubmit.value) {
+    alert('Không thể gửi đơn. Vui lòng kiểm tra lại thông tin.')
+    return
+  }
+  
+  // Parse thời gian nghỉ
+  const durationMatch = leaveDuration.value.match(/(\d+\.?\d*)/)
+  if (!durationMatch) {
+    alert('Thời gian nghỉ không hợp lệ')
+    return
+  }
+  
+  const durationHours = parseFloat(durationMatch[1])
+  const durationDays = durationHours / 8
+  
+  // Kiểm tra lại balance
+  if (selectedLeaveType.value === 'PPN') {
+    const maxPPNDays = PPN_count.value * 0.0625
+    if (durationDays > maxPPNDays) {
+      alert(`Thời gian nghỉ vượt quá số phép phụ nữ còn lại (${PPN_count.value} phép = ${maxPPNDays} ngày)`)
+      return
+    }
+  } else {
+    const remainingDays = parseFloat(remain.value) || 0
+    if (durationDays > remainingDays) {
+      alert(`Thời gian nghỉ vượt quá số ngày phép còn lại (${remainingDays} ngày)`)
+      return
+    }
+  }
+  
+  // Nếu tất cả validation pass, tiến hành submit
+  console.log('Validation passed, proceeding with submission...')
+  
+  // TODO: Implement actual API call
+  const leaveData = {
+    employee_id: computedUserId.value,
+    leave_type_id: selectedLeaveType.value,
+    from_date: fromDate.value,
+    from_time: fromTime.value,
+    to_date: toDate.value,
+    to_time: toTime.value,
+    duration: durationHours,
+    note: note.value
+  }
+  
+  console.log('Leave data to submit:', leaveData)
+  
+  // Gọi API submit
+  // submitLeaveToAPI(leaveData)
+}
+
+const fetchLeaveData = async () => {
+  console.log('🟡 fetchLeaveData called. User ID:', computedUserId.value)
+
+  const userId = computedUserId.value?.trim()
+
+  if (!userId) {
+    error.value = '❌ Không tìm thấy mã nhân viên hợp lệ.'
+    hasAttemptedFetch.value = true
+    return
+  }
+
+  loading.value = true
+  error.value = ''
+  leaveLetter.value = []
+
+  try {
+    const res = await fetch('http://192.168.1.70:5002/leave/attendance', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': userStore.getAuthHeader()
+      },
+      body: JSON.stringify({
+        employee_id: userId
+      })
+    })
+
+    if (!res.ok) {
+      const msg = `HTTP ${res.status}: Không tìm thấy dữ liệu hoặc lỗi máy chủ.`
+      console.error('❌ Fetch error:', msg)
+      throw new Error(msg)
+    }
+
+    const data = await res.json()
+    console.log('✅ Dữ liệu nghỉ phép nhận được:', data)
+
+    // XỬ LÝ CẤU TRÚC DỮ LIỆU MỚI
+    if (data.success && Array.isArray(data.records)) {
+      leaveLetter.value = data.records
+      console.log(`✅ Đã load ${data.count} bản ghi nghỉ phép`)
+      remain.value = leaveLetter.value?.[0]?.remain ?? 0;
+      PPN_count.value = Number(leaveLetter.value?.[0]?.PPN_count) ?? 0;
+    } else {
+      console.warn('⚠️ Dữ liệu không có định dạng mong đợi:', data)
+      leaveLetter.value = []
+    }
+
+  } catch (err) {
+    console.error('❌ Lỗi khi lấy dữ liệu nghỉ phép:', err)
+    error.value = err.message || 'Đã xảy ra lỗi không xác định.'
+  } finally {
+    loading.value = false
+  }
+}
 
 // Hours and minutes for picker
 const hours = ref(Array.from({length: 24}, (_, i) => i))
@@ -313,6 +439,39 @@ const isFormValid = computed(() => {
          toDate.value && toTime.value &&
          leaveDuration.value &&
          !leaveDuration.value.toString().includes('không hợp lệ')
+})
+
+// Validate leave time against remaining balance
+const isLeaveTimeValid = computed(() => {
+  // Kiểm tra nếu chưa có thời gian nghỉ
+  if (!leaveDuration.value || leaveDuration.value.toString().includes('không hợp lệ')) {
+    return false
+  }
+
+  // Parse thời gian nghỉ từ string (ví dụ: "8.00 giờ" -> 8.00)
+  const durationMatch = leaveDuration.value.match(/(\d+\.?\d*)/)
+  if (!durationMatch) {
+    return false
+  }
+  
+  const durationHours = parseFloat(durationMatch[1])
+  const durationDays = durationHours / 8 // Chuyển giờ thành ngày
+
+  // Kiểm tra loại phép
+  if (selectedLeaveType.value === 'PPN') {
+    // Phép phụ nữ: 0.5 giờ = 0.0625 ngày
+    const maxPPNDays = PPN_count.value * 0.0625
+    return durationDays <= maxPPNDays
+  } else {
+    // Phép thường: so sánh với remain (đã là số ngày)
+    const remainingDays = parseFloat(remain.value) || 0
+    return durationDays <= remainingDays
+  }
+})
+
+// Combined validation for button
+const canSubmit = computed(() => {
+  return isFormValid.value && isLeaveTimeValid.value
 })
 
 const userName = computed(() =>{
@@ -502,6 +661,7 @@ watch([leaveDateFrom, leaveDateTo], ([from, to]) => {
 
 onMounted(() => {
   fetchLeaveType()
+  fetchLeaveData()
 })
 </script>
 

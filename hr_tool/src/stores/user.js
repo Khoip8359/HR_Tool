@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import apiService from '@/services/api'
+import { formatDisplayName, getStorageKey } from '@/utils/userUtils'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -93,7 +95,7 @@ export const useUserStore = defineStore('user', {
         if (payload.data.user) {
           this.userInfo = {
             department: payload.data.user.department || '',
-            displayName: payload.data.user.display_name || '',
+            displayName: formatDisplayName(payload.data.user.display_name),
             email: payload.data.user.email || '',
             isManager: payload.data.user.is_manager || false,
             permissions: payload.data.user.permissions || [],
@@ -109,7 +111,7 @@ export const useUserStore = defineStore('user', {
           if (payload.data.user.manager_info) {
             this.managerInfo = {
               department: payload.data.user.manager_info.department || '',
-              displayName: payload.data.user.manager_info.display_name || '',
+              displayName: formatDisplayName(payload.data.user.manager_info.display_name),
               dn: payload.data.user.manager_info.dn || '',
               givenName: payload.data.user.manager_info.given_name || '',
               mail: payload.data.user.manager_info.mail || '',
@@ -159,15 +161,17 @@ export const useUserStore = defineStore('user', {
         savedAt: Date.now()
       }
 
+      const storageKey = getStorageKey('userData')
+
       if (rememberMe) {
         // Lưu vào localStorage (persistent)
-        localStorage.setItem('userData', JSON.stringify(userData))
-        sessionStorage.removeItem('userData') // Xóa session storage nếu có
+        localStorage.setItem(storageKey, JSON.stringify(userData))
+        sessionStorage.removeItem(storageKey) // Xóa session storage nếu có
         console.log('💾 Data saved to localStorage')
       } else {
         // Chỉ lưu vào sessionStorage (temporary)
-        sessionStorage.setItem('userData', JSON.stringify(userData))
-        localStorage.removeItem('userData') // Xóa localStorage nếu có
+        sessionStorage.setItem(storageKey, JSON.stringify(userData))
+        localStorage.removeItem(storageKey) // Xóa localStorage nếu có
         console.log('💾 Data saved to sessionStorage')
       }
     },
@@ -176,12 +180,13 @@ export const useUserStore = defineStore('user', {
     restoreFromStorage() {
       try {
         // Kiểm tra localStorage trước (remember me)
-        let savedData = localStorage.getItem('userData')
+        const storageKey = getStorageKey('userData')
+        let savedData = localStorage.getItem(storageKey)
         let isFromLocalStorage = true
 
         // Nếu không có localStorage, kiểm tra sessionStorage
         if (!savedData) {
-          savedData = sessionStorage.getItem('userData')
+          savedData = sessionStorage.getItem(storageKey)
           isFromLocalStorage = false
         }
 
@@ -218,18 +223,18 @@ export const useUserStore = defineStore('user', {
         return false
       } catch (error) {
         console.error('❌ Error restoring user data:', error)
-        this.clearStorage() // Clear corrupted data
+        this.clearStorage()
         return false
       }
     },
 
     // 🗑️ Xóa storage
     clearStorage() {
-      localStorage.removeItem('userData')
-      sessionStorage.removeItem('userData')
+      const storageKey = getStorageKey('userData')
+      localStorage.removeItem(storageKey)
+      sessionStorage.removeItem(storageKey)
     },
     
-    // Enhanced clearUserData với storage cleanup
     clearUserData() {
       this.loginTime = ''
       this.sessionManagement = {
@@ -274,20 +279,17 @@ export const useUserStore = defineStore('user', {
       this.rememberMe = false
       this.isLoading = false
 
-      // Clear storage và auto refresh
       this.clearStorage()
       this.clearAutoRefresh()
       
       console.log('🚪 User data cleared')
     },
 
-    // 🔄 Auto refresh token logic
     setupAutoRefresh() {
-      this.clearAutoRefresh() // Clear existing timer
+      this.clearAutoRefresh()
       
       if (!this.tokens.expiresAt) return
 
-      // Refresh token khi còn 5 phút nữa hết hạn
       const timeUntilRefresh = this.tokens.expiresAt - Date.now() - (5 * 60 * 1000)
       
       if (timeUntilRefresh > 0) {
@@ -306,7 +308,6 @@ export const useUserStore = defineStore('user', {
       }
     },
 
-    // 🔄 Refresh token
     async refreshToken() {
       try {
         if (!this.tokens.refreshToken) {
@@ -316,22 +317,8 @@ export const useUserStore = defineStore('user', {
         this.isLoading = true
         console.log('🔄 Refreshing token...')
 
-        // TODO: Thay thế bằng API call thực tế
-        const response = await fetch('/api/auth/refresh', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.tokens.refreshToken}`
-          }
-        })
-
-        if (!response.ok) {
-          throw new Error('Token refresh failed')
-        }
-
-        const refreshData = await response.json()
+        const refreshData = await apiService.refreshToken(this.tokens.refreshToken)
         
-        // Cập nhật token mới
         const expiresAt = Date.now() + ((refreshData.expires_in || 3600) * 1000)
         
         this.tokens = {
@@ -342,37 +329,30 @@ export const useUserStore = defineStore('user', {
           expiresAt: expiresAt
         }
 
-        // Cập nhật storage
         this.saveToStorage(this.rememberMe)
         
-        // Setup next refresh
         this.setupAutoRefresh()
         
         console.log('✅ Token refreshed successfully')
         
       } catch (error) {
         console.error('❌ Token refresh failed:', error)
-        // Auto logout khi refresh fail
         this.clearUserData()
-        // Có thể redirect to login page ở đây
       } finally {
         this.isLoading = false
       }
     },
 
-    // 🔐 Get Authorization header
     getAuthHeader() {
       return this.tokens.accessToken ? `${this.tokens.tokenType} ${this.tokens.accessToken}` : null
     },
 
-    // 🔍 Check permission
     hasPermission(permission) {
       return this.userInfo.permissions?.includes(permission) || false
     }
   },
   
   getters: {
-    // Getter để kiểm tra xem user có đăng nhập không (enhanced)
     isLoggedIn: (state) => {
       return !!(
         state.tokens.accessToken && 
@@ -381,26 +361,20 @@ export const useUserStore = defineStore('user', {
       )
     },
     
-    // Getter để lấy tên hiển thị
     displayName: (state) => state.userInfo.displayName,
     
-    // Getter để kiểm tra xem user có phải manager không
     isManager: (state) => state.userInfo.isManager,
     
-    // Getter để lấy permissions
     userPermissions: (state) => state.userInfo.permissions,
     
-    // Getter để lấy thông tin manager
     managerDisplayName: (state) => state.managerInfo.displayName,
 
-    // 🕐 Thời gian còn lại của token (minutes)
     tokenTimeRemaining: (state) => {
       if (!state.tokens.expiresAt) return 0
       const remaining = state.tokens.expiresAt - Date.now()
       return Math.max(0, Math.floor(remaining / 1000 / 60))
     },
 
-    // 🔋 Token status
     tokenStatus: (state) => {
       if (!state.tokens.accessToken) return 'no-token'
       if (!state.tokens.expiresAt) return 'unknown'
@@ -411,7 +385,6 @@ export const useUserStore = defineStore('user', {
       return 'valid'
     },
 
-    // 💾 Storage info
     storageInfo: (state) => ({
       type: state.rememberMe ? 'localStorage' : 'sessionStorage',
       rememberMe: state.rememberMe

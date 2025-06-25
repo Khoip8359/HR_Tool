@@ -69,7 +69,11 @@
               </div>
               <div class="bg-light rounded p-2 border">
                 <strong class="text-muted">Số ngày nghỉ còn lại</strong>
-                <div class="fw-bold text-warning">{{ remain }} ngày</div>
+                <div class="fw-bold text-warning">{{ remain }} ngày ( {{ remain*8 }} giờ )</div>
+              </div>
+              <div class="bg-light rounded p-2 border">
+                <strong class="text-muted">Số phép phụ nữ còn lại</strong>
+                <div class="fw-bold text-danger">{{ PPN_count }} phép ( {{ PPN_count*0.5 }} giờ )</div>
               </div>
             </div>
           </div>
@@ -224,6 +228,7 @@ const currentMonth = ref(new Date().getMonth())
 const currentYear = ref(new Date().getFullYear())
 const selectedLeave = ref(null)
 const remain = ref('')
+const PPN_count = ref('')
 
 // Calendar constants
 const monthNames = [
@@ -457,6 +462,7 @@ const fetchLeaveData = async () => {
       leaveLetter.value = data.records
       console.log(`✅ Đã load ${data.count} bản ghi nghỉ phép`)
       remain.value = leaveLetter.value[0]?.remain || '0'
+      PPN_count.value = Number(leaveLetter.value?.[0]?.PPN_count) ?? 0;
     } else {
       console.warn('⚠️ Dữ liệu không có định dạng mong đợi:', data)
       leaveLetter.value = []
